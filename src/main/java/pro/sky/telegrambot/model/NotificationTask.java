@@ -13,7 +13,7 @@ public class NotificationTask {
     @GeneratedValue
     private Long id;
     private Long chatId;
-    private String notification,
+    private String notification;
     private LocalDateTime alarmDate;
     private LocalDateTime addedAt;
     public NotificationTask(Long id, Long chatId, String notification, LocalDateTime alarmDate, LocalDateTime addedAt) {
