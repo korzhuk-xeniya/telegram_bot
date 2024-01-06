@@ -10,6 +10,7 @@ public class notificationServiseImpl implements notificationServise {
     private TelegramBot telegramBot;
     @Override
     public void process(Update update) {
+
         Long chatId = update.message().chat().id();
         String message = update.message().text();
         if (message.equals("/start")) {
