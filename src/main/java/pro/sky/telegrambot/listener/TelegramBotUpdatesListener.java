@@ -18,6 +18,7 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
 
     @Autowired
     private TelegramBot telegramBot;
+    private TelegramBotUpdatesListener notificationServise;
 
     @PostConstruct
     public void init() {
@@ -27,7 +28,8 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
     @Override
     public int process(List<Update> updates) {
         updates.forEach(update -> {
-            logger.info("Processing update: {}", update);
+            logger.info("Processing update: {}", updates);
+            notificationServise.process(updates);
             // Process your updates here
         });
         return UpdatesListener.CONFIRMED_UPDATES_ALL;
