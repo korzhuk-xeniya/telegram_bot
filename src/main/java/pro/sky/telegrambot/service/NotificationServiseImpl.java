@@ -2,10 +2,10 @@ package pro.sky.telegrambot.service;
 
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
-import org.hibernate.sql.Update;
+import com.pengrad.telegrambot.model.Update;
 
 
-public class notificationServiseImpl implements notificationServise {
+public abstract class NotificationServiseImpl implements NotificationServise {
 
     private TelegramBot telegramBot;
     @Override
@@ -25,4 +25,6 @@ public class notificationServiseImpl implements notificationServise {
         telegramBot.execute(new SendMessage(chatId,
                 " Добро пожаловать в бот, который напомнит о важных событиях!"));
     }
+
+
 }

@@ -1,6 +1,6 @@
---liquibase formatted sql
-
---changeset kkorzhuk:1
+----liquibase formatted sql
+----
+----changeset kkorzhuk:1
 CREATE TABLE notification_task (
 id SERIAL,
 chat_id LONG,
