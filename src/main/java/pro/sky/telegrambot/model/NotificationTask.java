@@ -6,18 +6,18 @@ import javax.persistence.Id;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 public class NotificationTask {
     @Id
     @GeneratedValue
-    private Long id;
+    private UUID id;
     private Long chatId;
     private String notification;
     private LocalDateTime alarmDate;
     private LocalDateTime addedAt;
-    public NotificationTask(Long id, Long chatId, String notification, LocalDateTime alarmDate, LocalDateTime addedAt) {
-        this.id = id;
+    public NotificationTask(Long chatId, String notification, LocalDateTime alarmDate, LocalDateTime addedAt) {
         this.chatId = chatId;
         this.notification = notification;
         this.alarmDate = alarmDate;
@@ -36,11 +36,11 @@ public class NotificationTask {
         return Objects.hash(id, chatId, notification, alarmDate, addedAt);
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
