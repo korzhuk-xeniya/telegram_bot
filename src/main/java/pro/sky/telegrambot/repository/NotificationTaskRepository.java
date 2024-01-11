@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface NotificationTaskRepository extends JpaRepository<NotificationTask, UUID> {
-//    Optional<NotificationTask> saveById(Long Id);
+
     List<NotificationTask> findByAlarmDate(LocalDateTime alarmDate);
 
 }

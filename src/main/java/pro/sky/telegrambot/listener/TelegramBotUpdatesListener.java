@@ -32,17 +32,13 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
     public void init() {
         telegramBot.setUpdatesListener(this);
     }
-@Scheduled(cron = "0 0/1 ****")
-public void sendNotificationMessage() {
-//        notificationServise.sch
 
-}
     @Override
     public int process(List<Update> updates) {
+
         updates.forEach(update -> {
             logger.info("Processing update: {}", updates);
             notificationServise.process(update);
-            // Process your updates here
         });
         return UpdatesListener.CONFIRMED_UPDATES_ALL;
     }

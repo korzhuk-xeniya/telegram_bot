@@ -1,24 +1,25 @@
 package pro.sky.telegrambot.service;
 
 import com.pengrad.telegrambot.TelegramBot;
-import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.model.Update;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import pro.sky.telegrambot.model.NotificationTask;
 import pro.sky.telegrambot.repository.NotificationTaskRepository;
 
-import javax.management.Notification;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
+
 
 public  class NotificationServiseImpl implements NotificationServise {
 
@@ -49,15 +50,16 @@ public  class NotificationServiseImpl implements NotificationServise {
         Matcher matcher = MESSAGE_PATTERN.matcher(message);
         if (matcher.find()) {
             dateFormatterValidation(chatId, matcher);
+            LocalDateTime alarmDate = LocalDateTime.parse(matcher.group(1), DATE_TIME_FORMATTER);
+            String notification = matcher.group(3);
+            LocalDateTime now = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
+            saveEntity(chatId, notification, alarmDate, now);
         } else {
             sendMessage(chatId,
                     "Добавление напоминания возможно только в следующем формате: 'дд.мм.гггг чч:мм' текст напоминания");
             return;
         }
-        LocalDateTime alarmDate = LocalDateTime.parse(matcher.group(1), DATE_TIME_FORMATTER);
-        String notification = matcher.group(3);
-        LocalDateTime now = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
-        saveEntity(chatId, notification, alarmDate, now);
+
 
     }
 
@@ -71,7 +73,7 @@ public  class NotificationServiseImpl implements NotificationServise {
                 return;
             }
         } catch (DateTimeParseException exception) {
-            sendMessage(chatId, "\"Добавление напоминания возможно только в следующем формате: 'дд.мм.гггг чч:мм' текст напоминания");
+            sendMessage(chatId, "Добавление напоминания возможно только в следующем формате: 'дд.мм.гггг чч:мм' текст напоминания");
 
         }
 
@@ -92,6 +94,17 @@ public  class NotificationServiseImpl implements NotificationServise {
     public void sendMessage(Long chatId, String messageText) {
         SendMessage sendMessage = new SendMessage(chatId,messageText);
         telegramBot.execute(sendMessage);
+    }
+    @Override
+    @Scheduled(cron = "0 0/1 ****")
+    public void recordsToDataBase() {
+        List<NotificationTask> records = repository
+                .findByAlarmDate(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES));
+        records.forEach(record -> {
+            logger.info("Напоминание было отправлено");
+            sendMessage(record.getChatId(), String.format("Не забудь: " + record.getNotification(), record.getAlarmDate()));
+        });
+
     }
 
 
