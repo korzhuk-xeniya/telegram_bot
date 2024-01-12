@@ -19,6 +19,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
+//@RequiredArgsConstructor
 
 
 public  class NotificationServiseImpl implements NotificationServise {
@@ -28,6 +29,12 @@ public  class NotificationServiseImpl implements NotificationServise {
     private Logger logger =  LoggerFactory.getLogger(NotificationServiseImpl.class);
     private static Pattern MESSAGE_PATTERN = Pattern.compile("([0-9\\.:\\s]{16})(\\s)(.+)");
     private static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm");
+
+    public NotificationServiseImpl(TelegramBot telegramBot, NotificationTaskRepository repository, Logger logger) {
+        this.telegramBot = telegramBot;
+        this.repository = repository;
+        this.logger = logger;
+    }
 
     @Override
     public void process(Update update) {
@@ -96,7 +103,7 @@ public  class NotificationServiseImpl implements NotificationServise {
         telegramBot.execute(sendMessage);
     }
     @Override
-    @Scheduled(cron = "0 0/1 ****")
+    @Scheduled(cron = "0 0/1 * * * *")
     public void recordsToDataBase() {
         List<NotificationTask> records = repository
                 .findByAlarmDate(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES));

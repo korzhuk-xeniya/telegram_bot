@@ -8,6 +8,7 @@ public interface NotificationServise {
 
     void sendMessage(Long chatId, String messageText);
 
-    @Scheduled(cron = "0 0/1 ****")
+
+    @Scheduled(cron = "0 0/1 * * * *")
     void recordsToDataBase();
 }
