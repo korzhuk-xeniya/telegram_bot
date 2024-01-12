@@ -3,6 +3,7 @@ package pro.sky.telegrambot.service;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.model.Update;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -19,7 +20,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 
 
 public  class NotificationServiseImpl implements NotificationServise {
@@ -30,11 +31,11 @@ public  class NotificationServiseImpl implements NotificationServise {
     private static Pattern MESSAGE_PATTERN = Pattern.compile("([0-9\\.:\\s]{16})(\\s)(.+)");
     private static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm");
 
-    public NotificationServiseImpl(TelegramBot telegramBot, NotificationTaskRepository repository, Logger logger) {
-        this.telegramBot = telegramBot;
-        this.repository = repository;
-        this.logger = logger;
-    }
+//    public NotificationServiseImpl(TelegramBot telegramBot, NotificationTaskRepository repository, Logger logger) {
+//        this.telegramBot = telegramBot;
+//        this.repository = repository;
+//        this.logger = logger;
+//    }
 
     @Override
     public void process(Update update) {
