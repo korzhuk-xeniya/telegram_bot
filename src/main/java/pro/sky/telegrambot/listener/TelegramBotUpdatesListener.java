@@ -20,7 +20,7 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
 
     private Logger logger = LoggerFactory.getLogger(TelegramBotUpdatesListener.class);
     private NotificationServise notificationServise;
-    @Autowired
+//    @Autowired
     private TelegramBot telegramBot;
 
     public TelegramBotUpdatesListener(NotificationServise notificationServise, TelegramBot telegramBot) {
