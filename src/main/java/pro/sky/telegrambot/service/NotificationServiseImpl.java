@@ -20,7 +20,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 
 
 public  class NotificationServiseImpl implements NotificationServise {
