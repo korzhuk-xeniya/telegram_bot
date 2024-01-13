@@ -31,10 +31,9 @@ public  class NotificationServiseImpl implements NotificationServise {
     private static Pattern MESSAGE_PATTERN = Pattern.compile("([0-9\\.:\\s]{16})(\\s)(.+)");
     private static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm");
 
-    public NotificationServiseImpl(TelegramBot telegramBot, NotificationTaskRepository repository, Logger logger) {
+    public NotificationServiseImpl(TelegramBot telegramBot, NotificationTaskRepository repository) {
         this.telegramBot = telegramBot;
         this.repository = repository;
-        this.logger = logger;
     }
 
     @Override
