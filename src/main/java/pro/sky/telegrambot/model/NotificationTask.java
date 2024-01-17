@@ -1,22 +1,25 @@
 package pro.sky.telegrambot.model;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
+//import com.fasterxml.jackson.annotation.JsonAnyGetter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "notification_tasks")
+@Table(name = "notification_task")
+
 
 
 public class NotificationTask {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private UUID id;
+    private Integer id;
+
+
+
     @Column(name = "chat_id")
     private Long chatId;
     @Column(name = "notification")
@@ -25,6 +28,8 @@ public class NotificationTask {
     private LocalDateTime alarmDate;
     @Column(name = "added_at")
     private LocalDateTime addedAt;
+    public NotificationTask() {
+    }
     public NotificationTask(Long chatId, String notification, LocalDateTime alarmDate, LocalDateTime addedAt) {
         this.chatId = chatId;
         this.notification = notification;
@@ -32,6 +37,41 @@ public class NotificationTask {
         this.addedAt = addedAt;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public Long getChatId() {
+        return chatId;
+    }
+
+//    public void setChatId(Long chatId) {
+//        this.chatId = chatId;
+//    }
+
+    public String getNotification() {
+        return notification;
+    }
+
+    public void setNotification(String notification) {
+        this.notification = notification;
+    }
+
+    public LocalDateTime getAlarmDate() {
+        return alarmDate;
+    }
+
+    public void setAlarmDate(LocalDateTime alarmDate) {
+        this.alarmDate = alarmDate;
+    }
+
+    public LocalDateTime getAddedAt() {
+        return addedAt;
+    }
+
+    public void setAddedAt(LocalDateTime addedAt) {
+        this.addedAt = addedAt;
+    }
     @Override
     public String toString() {
         return "NotificationTask{" +
@@ -59,45 +99,7 @@ public class NotificationTask {
         return Objects.hash(id, chatId, notification, alarmDate, addedAt);
     }
 
-    public UUID getId() {
-        return id;
-    }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public Long getChatId() {
-        return chatId;
-    }
-
-    public void setChatId(Long chatId) {
-        this.chatId = chatId;
-    }
-
-    public String getNotification() {
-        return notification;
-    }
-
-    public void setNotification(String notification) {
-        this.notification = notification;
-    }
-
-    public LocalDateTime getAlarmDate() {
-        return alarmDate;
-    }
-
-    public void setAlarmDate(LocalDateTime alarmDate) {
-        this.alarmDate = alarmDate;
-    }
-
-    public LocalDateTime getAddedAt() {
-        return addedAt;
-    }
-
-    public void setAddedAt(LocalDateTime addedAt) {
-        this.addedAt = addedAt;
-    }
 
 
 }

@@ -25,11 +25,11 @@ import java.util.regex.Pattern;
 
 public  class NotificationServiseImpl implements NotificationServise {
 
-    private TelegramBot telegramBot;
-    private NotificationTaskRepository repository;
-    private Logger logger =  LoggerFactory.getLogger(NotificationServiseImpl.class);
-    private static Pattern MESSAGE_PATTERN = Pattern.compile("([0-9\\.:\\s]{16})(\\s)(.+)");
-    private static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm");
+    private final TelegramBot telegramBot;
+    private final NotificationTaskRepository repository;
+    private final Logger logger =  LoggerFactory.getLogger(NotificationServiseImpl.class);
+    private static final Pattern MESSAGE_PATTERN = Pattern.compile("([0-9\\.:\\s]{16})(\\s)(.+)");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm");
 
     public NotificationServiseImpl(TelegramBot telegramBot, NotificationTaskRepository repository) {
         this.telegramBot = telegramBot;
@@ -64,7 +64,6 @@ public  class NotificationServiseImpl implements NotificationServise {
         } else {
             sendMessage(chatId,
                     "Добавление напоминания возможно только в следующем формате: 'дд.мм.гггг чч:мм' текст напоминания");
-            return;
         }
 
 
@@ -77,7 +76,6 @@ public  class NotificationServiseImpl implements NotificationServise {
             if (!alarmDate.isAfter(LocalDateTime.now())) {
                 logger.warn("Напоминание в прошлое отправить нельзя!");
                 sendMessage(chatId, "Напоминание в прошлое отправить нельзя!");
-                return;
             }
         } catch (DateTimeParseException exception) {
             sendMessage(chatId, "Добавление напоминания возможно только в следующем формате: 'дд.мм.гггг чч:мм' текст напоминания");
@@ -102,7 +100,7 @@ public  class NotificationServiseImpl implements NotificationServise {
         SendMessage sendMessage = new SendMessage(chatId,messageText);
         telegramBot.execute(sendMessage);
     }
-    @Override
+
     @Scheduled(cron = "0 0/1 * * * *")
     public void recordsToDataBase() {
         List<NotificationTask> records = repository
