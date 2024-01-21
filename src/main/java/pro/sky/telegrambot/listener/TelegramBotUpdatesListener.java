@@ -5,11 +5,9 @@ import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import pro.sky.telegrambot.service.NotificationServise;
+import pro.sky.telegrambot.service.NotificationService;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -19,12 +17,12 @@ import java.util.List;
 public class TelegramBotUpdatesListener implements UpdatesListener {
 
     private Logger logger = LoggerFactory.getLogger(TelegramBotUpdatesListener.class);
-    private NotificationServise notificationServise;
+    private NotificationService notificationService;
 //    @Autowired
     private TelegramBot telegramBot;
 
-    public TelegramBotUpdatesListener(NotificationServise notificationServise, TelegramBot telegramBot) {
-        this.notificationServise = notificationServise;
+    public TelegramBotUpdatesListener(NotificationService notificationService, TelegramBot telegramBot) {
+        this.notificationService = notificationService;
         this.telegramBot = telegramBot;
     }
 
@@ -38,7 +36,7 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
 
         updates.forEach(update -> {
             logger.info("Processing update: {}", updates);
-            notificationServise.process(update);
+            notificationService.process(update);
         });
         return UpdatesListener.CONFIRMED_UPDATES_ALL;
     }

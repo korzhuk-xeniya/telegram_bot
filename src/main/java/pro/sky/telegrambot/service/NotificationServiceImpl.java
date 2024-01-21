@@ -3,7 +3,6 @@ package pro.sky.telegrambot.service;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.model.Update;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -23,16 +22,16 @@ import java.util.regex.Pattern;
 //@RequiredArgsConstructor
 
 
-public  class NotificationServiseImpl implements NotificationServise {
+public  class NotificationServiceImpl implements NotificationService {
 
     private final TelegramBot telegramBot;
     private final NotificationTaskRepository repository;
-    private final Logger logger =  LoggerFactory.getLogger(NotificationServiseImpl.class);
+    private final Logger logger =  LoggerFactory.getLogger(NotificationServiceImpl.class);
 //    private static final Pattern MESSAGE_PATTERN = Pattern.compile("([0-9\\.:\\s]{16})(\\s)(.+)");
     private static final Pattern MESSAGE_PATTERN = Pattern.compile("([0-9.:\\s]{16})(\\s)([\\W+]+)");
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
-    public NotificationServiseImpl(TelegramBot telegramBot, NotificationTaskRepository repository) {
+    public NotificationServiceImpl(TelegramBot telegramBot, NotificationTaskRepository repository) {
         this.telegramBot = telegramBot;
         this.repository = repository;
     }
@@ -89,7 +88,7 @@ public  class NotificationServiseImpl implements NotificationServise {
         sendMessage(chatId," Добро пожаловать в бот, который напомнит о важных событиях! ");
     }
 
-    private void saveEntity(Long chatId, String notification, LocalDateTime alarmDate, LocalDateTime addedAt) {
+    public void saveEntity(Long chatId, String notification, LocalDateTime alarmDate, LocalDateTime addedAt) {
         NotificationTask notificationTask = new NotificationTask(chatId, notification, alarmDate, addedAt);
         repository.save(notificationTask);
         logger.info("Напоминание " + notificationTask + " сохранено");
