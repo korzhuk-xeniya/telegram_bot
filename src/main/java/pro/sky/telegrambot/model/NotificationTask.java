@@ -16,7 +16,7 @@ public class NotificationTask {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private UUID id;
 
 
 
@@ -37,7 +37,7 @@ public class NotificationTask {
         this.addedAt = addedAt;
     }
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 

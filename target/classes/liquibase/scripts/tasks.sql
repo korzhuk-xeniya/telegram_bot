@@ -2,7 +2,7 @@
 ----
 ----changeset kkorzhuk:1
 CREATE TABLE notification_task (
-id SERIAL,
+id UUID,
 chat_id BIGINT,
 notification TEXT,
 alarm_date TIMESTAMP,
